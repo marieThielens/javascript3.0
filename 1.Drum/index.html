@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+<script>
+
+// ecouter l'evenement quand touche pressée. On a une fonction a qui oon passe l event
+window.addEventListener('keydown', function(e){
+//console.log(e.keykode); Quelle touche a été pressée
+// selectionne la balise audio. la data-key = la keyCode de l'event.
+const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); 
+
+const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);// .key = la classe key 
+//console.log(audio);
+console.log(key);
+
+if(!audio) return; // si il n'y a pas d'audio : stopper la fonction
+audio.currentTime = 0; // A chaque fois que j appuie le son se remet à 0 (pour par qu'il ai de décalage)
+audio.play(); // Si il y a de l audio, jouer
+key.classList.add('playing'); // rajouter la classe playing (effet orange focus)
+});
+
+// fonction pour que la couleur ne reste pas
+function removeTransition(e){
+  if(e.propertyName !== 'transform') return; // on remove uniquement le transform
+  this.classList.remove('playing'); // this = sur la key pressée
+}
+
+const keys = document.querySelectorAll('.key'); // selectionner tout les el qui ont la classe key (donne tableau)
+// Boucler. Pour chasue key, ajouter un evenement 
+keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // quand la transition est finie; remove la transition
+</script>
+
+
+</body>
+</html>
