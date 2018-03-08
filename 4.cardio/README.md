@@ -8,6 +8,8 @@
 5. Sort  : trier les inventeurs par le nombres d'années qu'ils ont vécu.
 6. trier par ordre alphabétique en fonction du nom de famille
 
+## Methodes :
+
       const tableau = [
           { nom : 'element1',
             nom : 'element2', 
